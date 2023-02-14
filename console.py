@@ -15,7 +15,6 @@ from models.review import Review
 from models.base_model import BaseModel
 
 
-
 def parse(arg):
     """
     Method written to take and parse input before use
@@ -160,8 +159,8 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return False
         elif "{}.{}".format(args[0], args[1]) not in objdict:
-	    print("** no instance found **")
-	    return False
+            print("** no instance found **")
+            return False
         elif len(args) == 2:
             print("** attribute name missing **")
             return False
@@ -189,7 +188,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
-		   
+
 
 if __name__ == '__main__':
-HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
