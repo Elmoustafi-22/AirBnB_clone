@@ -1,6 +1,6 @@
 ## AirBnB Clone ― The ALX-Holberton BnB<br/>
 
------<br/>
+<br/>
 ### Description of the project<br/>
 The ALX-Holberton B&B sums up the implementation of my four months of studies at the ALX-Holberton School - the fullstack software engineering program. The goal of the project is to deploy a replica of the Airbnb Website using my server. The final version of this project will have: <br/>
 * A command interpreter to manipulate data without a visual interface, like a shell (for development and debugging)
@@ -21,8 +21,9 @@ As you navigate this code base, it is great to note the following concepts, whil
 * What is **kwargs and how to use it
 * How to handle named arguments in a function
 <br/>
+
 ### Files and Directories
------
+
 * models directory will contain all classes used for the entire project. A class, called “model” in a OOP project is the representation of an object/instance.
 * tests directory will contain all unit tests.
 * console.py file is the entry point of our command interpreter.
@@ -32,7 +33,7 @@ As you navigate this code base, it is great to note the following concepts, whil
 <br/>
 The project's implementation will happen in the following phases:<br/>
 ### Phase One
------
+
 * put in place a parent class (called BaseModel) to take care of the initialization, serialization and deserialization of my future instances
 * create a simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
 * create all classes used for AirBnB (User, State, City, Place…) that inherit from BaseModel
