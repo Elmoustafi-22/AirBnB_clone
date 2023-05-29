@@ -1,52 +1,54 @@
-#!usr/bin/python3
-"""Definition of the BaseModel class."""
+#!/usr/bin/python3
+"""Defines a class Base"""
 import uuid
 from datetime import datetime
 import models
 
 
 class BaseModel:
-    """Defines all common attributes/methods for other classes."""
+    """ Class that defines properties of base """
 
     def __init__(self, *args, **kwargs):
-        """Initialize the BaseModel class.
-        Args:
-        self (BaseModel): the current instance
-        args (any): not used here
-        kwargs (dict): dictionary of key/value pairs attributes
-        """
-
-        # public instance attributes
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
-        if len(kwargs):
-            iso_format = "%Y-%m-%dT%H:%M:%S.%f"
-            for key, value in kwargs.items():
-                if key in ["created_at", "updated_at"]:
-                    self.__dict__[key] = datetime.strptime(value, iso_format)
+        """ Creates new instances of Base """
+        if not kwargs:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
+            models.storage.new(self)
+        else:
+            time_format = "%Y-%m-%dT%H:%M:%S.%f"
+            for (key, value) in kwargs.items():
+                if key in ('created_at', 'updated_at'):
+                    self.__dict__[key] = datetime.strptime(value, time_format)
                 else:
                     self.__dict__[key] = value
-        else:
-            models.storage.new(self)
 
-    # public instance methods
+    def __str__(self):
+        """Returns a string represation of class details.
+
+        Returns:
+            str: class details
+        """
+        string = "["
+        string += str(self.__class__.__name__) + '] ('
+        string += str(self.id) + ') ' + str(self.__dict__)
+        return string
+
     def save(self):
-        """Updates the public instance attribute updated_at \
-	with the current datetime."""
-        self.updated_at = datetime.today()
+        """Update public instance attribute updated_at with current datetime.
+        """
+        self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """Returns a dictionary containing all \
-        keys/values of __dict__ of the instance."""
-        dict_copy = self.__dict__.copy()
-        dict_copy["created_at"] = self.created_at.isoformat()
-        dict_copy["updated_at"] = self.updated_at.isoformat()
-        dict_copy["__class__"] = self.__class__.__name__
+        """Returns a dictionary containing all key/values of __dict__ of
+        the instance.
 
-        return (dict_copy)
-
-    def __str__(self):
-        """Return the string representation of the instance."""
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        Returns:
+            dict: key/value pairs.
+        """
+        dict_ = self.__dict__.copy()
+        dict_['__class__'] = self.__class__.__name__
+        dict_['created_at'] = self.created_at.isoformat()
+        dict_['updated_at'] = self.updated_at.isoformat()
+        return dict_
